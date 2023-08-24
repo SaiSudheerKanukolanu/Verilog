@@ -1,3 +1,6 @@
+// Implementing Mux using If else, Case, Ternary operators
+// 4:1,8:1 muxs implemented in behavioral modelling
+
 // design 4:1 mux
 module mux41(in,s,o);
   input  [3:0] in;
