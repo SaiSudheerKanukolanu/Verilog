@@ -1,0 +1,40 @@
+// alu design
+
+// Code your design here
+module alu(input[3:0] a, input[3:0] b, 
+           input [3:0] control,output reg [7:0] out);
+  always @(a,b,control) begin
+  case (control)
+    0: out=a+b;
+    1: out=a-b;
+    2: out=a*b;
+    3: out=a/b;
+    4: out=a&b;
+    5: out=a|b;
+    6: out=~a;
+    7: out=a^b;
+    8: out=~(a&b);
+    9: out=~(a|b);
+    10: out=~(a^b);
+   endcase
+  end
+endmodule
+     
+// tb
+// Code your testbench here
+// or browse Examples
+module alu_tb();
+  reg [3:0] a,b,control;
+  wire [7:0] out;
+  alu a1(a,b,control,out);
+  initial begin
+    a=10;b=2;control=0;
+    $dumpfile("dump.vcd");
+    $dumpvars();
+    $monitor($time," control=%d output=%d",control,out);
+    while(control<10) begin
+    	#10 control+=1;
+    end
+    #10 $finish;
+  end
+endmodule

@@ -1,0 +1,111 @@
+// up counter design
+
+// Code your design here
+module upcounter(input clk, input reset, output reg [3:0] out);
+  always @(posedge clk) begin
+    if (reset)
+      out=0;
+    else
+      out+=1;
+  end
+endmodule
+     
+//tb
+// Code your testbench here
+// or browse Examples
+module counters_tb();
+  reg clk,reset;
+  wire [3:0] out;
+  upcounter upc(clk,reset,out);
+  always #10 clk=~clk;
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars();
+    $monitor($time," reset=%b  clock=%b  output=%d",reset,clk,out);
+    clk=0;
+    #10 reset=1;
+    #20 reset=0;
+    #300 reset=1;
+    #40 reset=0;
+    #60 $finish;
+  end
+endmodule
+
+// down counter
+module downcounter(input clk, input preset, output reg [3:0] out);
+  always @(posedge clk) begin
+    if (preset)
+      out=~0;
+    else
+      out-=1;
+  end
+endmodule
+
+//tb
+// Code your testbench here
+// or browse Examples
+module counters_tb();
+  reg clk,reset,preset;
+  wire [3:0] out;
+  //upcounter upc(clk,reset,out);
+  downcounter dwc(clk,preset,out);
+  always #10 clk=~clk;
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars();
+    $monitor($time," preset=%b  clock=%b  output=%d",preset,clk,out);
+    clk=0;
+    #10 preset=1;
+    #20 preset=0;
+    #300 preset=1;
+    #40 preset=0;
+    #60 $finish;
+  end
+endmodule
+
+//up nd down counter
+
+// und=1 => up counter else down
+module updowncounter(input clk, input und,input reset,
+                     output reg [3:0] out);
+  always @(posedge clk,und) begin
+    if (reset)
+      out=0;
+    else 
+      begin
+        if(und==1) begin
+          if(out<15)
+          	out+=1;
+          else
+            out=0;
+        end
+        else begin
+          if(out>0)
+            out-=1;
+          else
+            out=~0;
+        end
+      end
+  end
+endmodule
+
+//tb
+// Code your testbench here
+// or browse Examples
+module counters_tb();
+  reg clk,reset,und;
+  wire [3:0] out;
+  //upcounter upc(clk,reset,out);
+  updowncounter dwc(clk,und,reset,out);
+  always #10 clk=~clk;
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars();
+    clk=0;
+    #10 reset=1;
+    #20 reset=0;
+    und=1;
+    #360 und=0;
+    #150 $finish;
+  end
+endmodule

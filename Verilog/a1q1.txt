@@ -1,0 +1,53 @@
+// Design.v
+module gates(a,b,out_and,out_or,out_nand,out_nor,out_not,out_xor,out_xnor);
+  input a,b;
+  output reg out_and,out_or,out_nand,out_nor,out_not,out_xor,out_xnor;
+  
+  //gate level
+//   and(out_and,a,b);
+//   or(out_or,a,b);
+//   nand(out_nand,a,b);
+//   nor(out_nor,a,b);
+//   xor(out_xor,a,b);
+//   xnor(out_xnor,a,b);
+//   not(out_not,a);
+  
+  //data flow 
+//   assign out_and=a&b;
+//   assign out_nand=~(a&b);
+//   assign out_or=a|b;
+//   assign out_nor=~(a|b);
+//   assign out_xor=a^b;
+//   assign out_xnor=~(a^b);
+//   assign out_not=~a;
+  
+  //behavioural
+  always @(a,b) begin
+    out_and=a&b;
+ 	out_nand=~(a&b);
+ 	out_or=a|b;
+	out_nor=~(a|b);
+ 	out_xor=a^b;
+ 	out_xnor=~(a^b);
+ 	out_not=~a;
+  end
+  
+endmodule
+
+// test bench
+module gates_tb();
+  reg a,b;
+  wire out_and,out_or,out_nand,out_nor,out_not,out_xor,out_xnor;
+  gates g(a,b,out_and,out_or,
+          out_nand,out_nor,out_not,out_xor,out_xnor);
+  
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars();
+    a=0;b=0;
+    #10 a=0;b=1;
+    #10 a=1;b=0;
+    #10 a=1;b=1;
+  	#10 $finish;
+   end
+endmodule

@@ -1,0 +1,93 @@
+// design 4:1 mux
+module mux41(in,s,o);
+  input  [3:0] in;
+  input  [1:0] s;
+  output reg o;
+  //behavoiral only
+  //using if else if
+  always @(in,s) begin
+    // using if else
+//     if (s==2'b00)
+//       o=in[0];
+//     else if (s==2'b01)
+//       o=in[1];
+//     else if (s==2'b10) 
+//       o=in[2];
+//     else
+//       o=in[3];  
+    
+    // ternary
+    // o=s[1]? (s[0]? in[3]:in[2]) : (s[0]? in[1]:in[0]);
+    
+    // case statement
+    case (s)
+      0: o=in[0];
+      1: o=in[1];
+      2: o=in[2];
+      3: o=in[3];
+    endcase
+  end
+endmodule
+
+// test bench
+module mux41_tb();
+  reg [3:0] in;
+  reg [1:0] s;
+  wire o;
+  mux41 m(in,s,o);
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars();
+    in=10;
+    s=2'b00;
+    #10 s=2'b01;
+    #10 s=2'b10;
+    #10 s=2'b11;
+    #10 $finish; 
+  end
+endmodule
+
+//8:1
+module mux81(in,s,o);
+  input  [7:0] in;
+  input  [2:0] s;
+  output reg o;
+  //behavoiral only
+  //using if else if
+  always @(in,s) begin
+  
+    case (s)
+      0: o=in[0];
+      1: o=in[1];
+      2: o=in[2];
+      3: o=in[3];
+      4: o=in[4];
+      5: o=in[5];
+      6: o=in[6];
+      7: o=in[7];
+       
+    endcase
+  end
+endmodule
+
+// tb
+module mux41_tb();
+  reg [7:0] in;
+  reg [2:0] s;
+  wire o;
+  mux81 m(in,s,o);
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars();
+    in=8'b01010101;
+    s=0;
+    #10 s=1;
+    #10 s=2;
+    #10 s=3;
+    #10 s=4;
+    #10 s=5;
+    #10 s=6;
+    #10 s=7;
+    #10 $finish; 
+  end
+endmodule
