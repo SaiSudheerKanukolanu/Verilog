@@ -1,5 +1,6 @@
-// up counter design
+// Upcounter, Downcounter, updown counter designs
 
+// up counter design
 // Code your design here
 module upcounter(input clk, input reset, output reg [3:0] out);
   always @(posedge clk) begin
