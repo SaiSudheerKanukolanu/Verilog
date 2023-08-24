@@ -1,3 +1,5 @@
+// implementing logic gates using gate level, data flow, behavioural modelling
+
 // Design.v
 module gates(a,b,out_and,out_or,out_nand,out_nor,out_not,out_xor,out_xnor);
   input a,b;
