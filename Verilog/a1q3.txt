@@ -1,4 +1,4 @@
-// alu design
+// simple alu design that takes control input and performs +,-,*,/,&,|,~,^
 
 // Code your design here
 module alu(input[3:0] a, input[3:0] b, 
